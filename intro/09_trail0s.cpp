@@ -1,3 +1,5 @@
+//INCOMPLETE-----
+//--------------
 #include<bits/stdc++.h>
 #define lli long long int
 #define ump unordered_map
@@ -20,23 +22,35 @@ void vcpp(vc<intpairs> &a){ for(intpairs x: a) cout << x.ff << ' ' << x.ss << en
 void ppp(intpairs &p){ cout << p.ff << ' ' << p.ss << endl; }
 const int MOD=1e9+7;
 
-//2^n mod 1e9+7
-lli pow2(int n){
+lli exp5(int n){
     lli res=1;
-    lli coeff = 2;
-    while(n>0){
+    lli coeff = 5;
+    while(n){
         if(n&1){
-            res = ((res%MOD)*(coeff%MOD))%MOD;
+            res *= coeff;
         }
-        coeff = ((coeff%MOD)*(coeff%MOD))%MOD;
-        n >>=1;
+        coeff *= coeff;
+        n>>=1;
     }
     return res;
 }
 
 void solve(){
     int n; cin>>n;
-    cout << pow2(n);
+    int m5e = (log(n)/log(5));
+    lli e5 = exp5(m5e);
+
+    int prevdivs=0;
+    int res=0;
+    int coeff=m5e;
+    while(e5>=5){
+        int divs = ((1LL*n)/e5);
+        int currdivs = (divs-prevdivs);
+        res += currdivs*(coeff--);
+        prevdivs += currdivs;
+        e5/=5;
+    }
+    cout << res;
 }
 
 int main(){

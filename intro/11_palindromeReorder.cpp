@@ -20,23 +20,48 @@ void vcpp(vc<intpairs> &a){ for(intpairs x: a) cout << x.ff << ' ' << x.ss << en
 void ppp(intpairs &p){ cout << p.ff << ' ' << p.ss << endl; }
 const int MOD=1e9+7;
 
-//2^n mod 1e9+7
-lli pow2(int n){
-    lli res=1;
-    lli coeff = 2;
-    while(n>0){
-        if(n&1){
-            res = ((res%MOD)*(coeff%MOD))%MOD;
-        }
-        coeff = ((coeff%MOD)*(coeff%MOD))%MOD;
-        n >>=1;
-    }
-    return res;
-}
-
 void solve(){
-    int n; cin>>n;
-    cout << pow2(n);
+    string ss; cin>>ss;
+    //count chars
+    int n = ss.length();
+    vc<int> ctr(26, 0);
+    for(char ch: ss){
+        ctr[(int)(ch-'A')]++;
+    }
+    //find center id and extra char
+    char extra; int mid=(n/2);
+    bool extrause= (n&1);
+    bool extrafound=false;
+    vc<char> res(n);
+    
+    for(char ch='A'; ch<='Z'; ch++){
+        if(ctr[ch-'A'] & 1){
+            if(extrafound){
+                cout << "NO SOLUTION";
+                return;
+            }
+            extra = ch;
+            ctr[ch-'A']--;
+            extrafound=true;
+        }
+    }
+    if(extrause)
+        res[mid]=extra;
+    
+    //make palindrome
+    int i=0, j=n-1, k=0;
+    while(i<j){
+        while(ctr[k]<=0)
+            k++;
+        res[i] = (char)(k + (int)'A');
+        ctr[k]--;
+        res[j] = (char)(k + (int)'A');
+        ctr[k]--;
+        i++;
+        j--;
+    }
+    for(char ch: res)
+        cout << ch;
 }
 
 int main(){

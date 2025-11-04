@@ -20,23 +20,23 @@ void vcpp(vc<intpairs> &a){ for(intpairs x: a) cout << x.ff << ' ' << x.ss << en
 void ppp(intpairs &p){ cout << p.ff << ' ' << p.ss << endl; }
 const int MOD=1e9+7;
 
-//2^n mod 1e9+7
-lli pow2(int n){
-    lli res=1;
-    lli coeff = 2;
-    while(n>0){
-        if(n&1){
-            res = ((res%MOD)*(coeff%MOD))%MOD;
-        }
-        coeff = ((coeff%MOD)*(coeff%MOD))%MOD;
-        n >>=1;
-    }
-    return res;
-}
-
 void solve(){
-    int n; cin>>n;
-    cout << pow2(n);
+    int t;cin>>t;
+    while(t--){
+        int a, b;
+        cin>>a>>b;
+        if((a==2*b) || (2*a==b)){
+            cout << "YES\n";
+            continue;
+        }
+        else if((a==b) && !(a%3)){
+            cout << "YES\n";
+            continue;
+        }
+        else{
+            cout << "NO\n";
+        }
+    }
 }
 
 int main(){
